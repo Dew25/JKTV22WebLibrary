@@ -1,11 +1,10 @@
 package ee.ivkhk.JKTV22WebLibrary.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,17 +16,18 @@ public class Book {
     private Integer publishedYear;
     private Integer quantity;
     private Integer count;
-    private String  author;
+    @OneToMany
+    private List<Author>  authors;
 
     public Book() {
     }
 
-    public Book(String title, Integer publishedYear, Integer quantity, Integer count, String author) {
+    public Book(String title, Integer publishedYear, Integer quantity, Integer count, List<Author> authors) {
         this.title = title;
         this.publishedYear = publishedYear;
         this.quantity = quantity;
         this.count = count;
-        this.author = author;
+        this.authors = authors;
     }
 
     public Long getId() {
@@ -70,12 +70,12 @@ public class Book {
         this.count = count;
     }
 
-    public String getAuthor() {
-        return author;
+    public List<Author> getAuthor() {
+        return authors;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthor(List<Author> authors) {
+        this.authors = authors;
     }
 
     @Override
@@ -83,12 +83,12 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(publishedYear, book.publishedYear) && Objects.equals(quantity, book.quantity) && Objects.equals(count, book.count) && Objects.equals(author, book.author);
+        return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(publishedYear, book.publishedYear) && Objects.equals(quantity, book.quantity) && Objects.equals(count, book.count) && Objects.equals(authors, book.authors);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, publishedYear, quantity, count, author);
+        return Objects.hash(id, title, publishedYear, quantity, count, authors);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class Book {
                 ", publishedYear=" + publishedYear +
                 ", quantity=" + quantity +
                 ", count=" + count +
-                ", author='" + author + '\'' +
+                ", authors=" + Arrays.toString(authors.toArray()) +
                 '}';
     }
 }

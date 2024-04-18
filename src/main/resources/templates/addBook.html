@@ -41,7 +41,7 @@
 <main>
     <h3 class="w-100 d-flex justify-content-center mt-5">Добавить книгу</h3>
     <div class="w-100 p-3 d-flex justify-content-center">
-        <form action="createBook" method="POST">
+        <form action="/book" method="POST">
             <div class="card border-0 m-2" style="width: 30rem;">
 
                 <div class="mb-3 row">
@@ -53,8 +53,8 @@
                 <div class="mb-3 row">
                     <label for="selectAuthor" class="col-sm-4 col-form-label">Авторы</label>
                     <div class="col-sm-8">
-                        <select class="form-select" name="authors" multiple rows="5" cols="20" id="selectAuthor">
-
+                        <select class="form-select" name="bookAuthors" multiple rows="5" cols="20" id="selectAuthor">
+                            <option th:each="author : ${listAuthors}" th:value="${author.id}" th:text="${author.firstname + ' ' + author.lastname}"></option>
                         </select>
                     </div>
                 </div>
@@ -70,14 +70,14 @@
                         <input type="text" class="form-control w-25" id="inputQuantity" name="quantity" th:text='${quantity}'>
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <label for="selectCover" class="col-sm-4 col-form-label">Обложки</label>
-                    <div class="col-sm-8">
-                        <select class="form-select" name="coverId" rows="5" cols="20" id="selectCover">
+<!--                <div class="mb-3 row">-->
+<!--                    <label for="selectCover" class="col-sm-4 col-form-label">Обложки</label>-->
+<!--                    <div class="col-sm-8">-->
+<!--                        <select class="form-select" name="coverId" rows="5" cols="20" id="selectCover">-->
 
-                        </select>
-                    </div>
-                </div>
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="row">
                     <div class="col-sm-12 d-flex justify-content-end">
                         <button class="btn btn-primary w-25" type="submit">Добавить</button>
