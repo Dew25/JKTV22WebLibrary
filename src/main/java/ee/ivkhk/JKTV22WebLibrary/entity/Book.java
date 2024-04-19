@@ -3,6 +3,7 @@ package ee.ivkhk.JKTV22WebLibrary.entity;
 
 import jakarta.persistence.*;
 
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -16,20 +17,55 @@ public class Book {
     private Integer publishedYear;
     private Integer quantity;
     private Integer count;
-    @OneToMany
+    @ManyToMany
     private List<Author>  authors;
+    @OneToOne
+    private Cover cover;
 
     public Book() {
     }
 
-    public Book(String title, Integer publishedYear, Integer quantity, Integer count, List<Author> authors) {
+    public Book(String title, Integer publishedYear, Integer quantity, Integer count, List<Author> authors, Cover cover) {
         this.title = title;
         this.publishedYear = publishedYear;
         this.quantity = quantity;
         this.count = count;
         this.authors = authors;
+        this.cover = cover;
     }
 
+//    public byte[] getCover() {
+//        // Создаем объект File для файла изображения
+//        File file = new File(cover.getPathToCover());
+//        // Проверяем, существует ли файл
+//        if (!file.exists()) {
+//            try {
+//                throw new IOException("Файл не найден: " + cover.getFileName());
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//        // Читаем содержимое файла в массив байт
+//        try (FileInputStream fis = new FileInputStream(file);
+//             ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+//            byte[] buffer = new byte[1024];
+//            int bytesRead;
+//            while ((bytesRead = fis.read(buffer)) != -1) {
+//                bos.write(buffer, 0, bytesRead);
+//            }
+//            return bos.toByteArray();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+
+    public Cover getCover() {
+        return cover;
+    }
+
+    public void setCover(Cover cover) {
+        this.cover = cover;
+    }
     public Long getId() {
         return id;
     }
@@ -70,11 +106,11 @@ public class Book {
         this.count = count;
     }
 
-    public List<Author> getAuthor() {
+    public List<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthor(List<Author> authors) {
+    public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
 
