@@ -19,7 +19,7 @@ public class Book {
     private Integer count;
     @ManyToMany
     private List<Author>  authors;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Cover cover;
 
     public Book() {

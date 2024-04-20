@@ -13,14 +13,17 @@ public class Cover {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String fileName;
-    private String pathToCover;
+    private String pathToFullCover;
+    private String pathToMinCover;
+
 
     public Cover() {
     }
 
-    public Cover(String fileName, String pathToCover) {
+    public Cover(String fileName, String pathToFullCover, String pathToMinCover) {
         this.fileName = fileName;
-        this.pathToCover = pathToCover;
+        this.pathToFullCover = pathToFullCover;
+        this.pathToMinCover = pathToMinCover;
     }
 
     public Long getId() {
@@ -31,6 +34,22 @@ public class Cover {
         this.id = id;
     }
 
+    public String getPathToFullCover() {
+        return pathToFullCover;
+    }
+
+    public void setPathToFullCover(String pathToFullCover) {
+        this.pathToFullCover = pathToFullCover;
+    }
+
+    public String getPathToMinCover() {
+        return pathToMinCover;
+    }
+
+    public void setPathToMinCover(String pathToMinCover) {
+        this.pathToMinCover = pathToMinCover;
+    }
+
     public String getFileName() {
         return fileName;
     }
@@ -39,25 +58,18 @@ public class Cover {
         this.fileName = fileName;
     }
 
-    public String getPathToCover() {
-        return pathToCover;
-    }
-
-    public void setPathToCover(String pathToCover) {
-        this.pathToCover = pathToCover;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cover cover = (Cover) o;
-        return Objects.equals(id, cover.id) && Objects.equals(fileName, cover.fileName) && Objects.equals(pathToCover, cover.pathToCover);
+        return Objects.equals(id, cover.id) && Objects.equals(fileName, cover.fileName) && Objects.equals(pathToFullCover, cover.pathToFullCover);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fileName, pathToCover);
+        return Objects.hash(id, fileName, pathToFullCover);
     }
 
     @Override
@@ -65,7 +77,7 @@ public class Cover {
         return "Cover{" +
                 "id=" + id +
                 ", fileName='" + fileName + '\'' +
-                ", pathToCover='" + pathToCover + '\'' +
+                ", pathToFullCover='" + pathToFullCover + '\'' +
                 '}';
     }
 }
