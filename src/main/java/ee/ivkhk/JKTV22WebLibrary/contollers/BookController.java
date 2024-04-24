@@ -9,10 +9,7 @@ import ee.ivkhk.JKTV22WebLibrary.repository.CoverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -35,10 +32,10 @@ public class BookController {
         return "index";
     }
     @GetMapping("/book")
-    public String book(Model model){
+    public String addBookForm(Model model){
         List<Author> listAuthors = (List<Author>) authorRepository.findAll();
         model.addAttribute("listAuthors",listAuthors);
-        return "addBook";
+        return "addBookForm";
     }
     @PostMapping("/book")
     public String addBook(
@@ -60,11 +57,7 @@ public class BookController {
             String fileName = file.getOriginalFilename();
             String filePath = uploadDir + File.separator + fileName;
             File dest = new File(filePath);
-            if(dest.mkdirs()){
-                System.out.println("Директория создана");
-            }else{
-                System.out.println("Директория существует");
-            }
+            if(dest.exists()) dest.mkdirs();
             file.transferTo(dest);
             cover = new Cover(fileName,filePath);
             coverRepository.save(cover);
@@ -77,7 +70,8 @@ public class BookController {
         return "redirect:/";
 
     }
-    @GetMapping("/image/{id}")
+    @GetMapping("/img/{id}")
+    @ResponseBody
     public byte[] insertCover(@PathVariable("id") Long id) throws RuntimeException {
         Cover cover = null;
         Optional<Cover> item = coverRepository.findById(id);
