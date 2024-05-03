@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<div th:replace="~{headers/index-template :: head}"></div>
+<body>
+<div th:replace="~{headers/index-template::menu}"></div>
+<div th:replace="~{headers/index-template::info}"></div>
+
+<main class="w-100 mx-auto">
+    <h1 class="w-100 text-center my-5">Новый читатель</h1>
+
+        <div class="card m-2 border-0 mx-auto" style="width: 35rem;">
+            <form action="/registration" method="POST">
+                <div class="mb-3 row">
+                    <label for="inputFirstname" class="col-sm-3 col-form-label">Имя:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="w-100" id="inputFirstname" name="firstname" value="">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputLastname" class="col-sm-3 col-form-label">Фамилия:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="w-100" id="inputLastname" name="lastname" value="">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputPhone" class="col-sm-3 col-form-label">Телефон:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="w-100" id="inputPhone" name="phone" value="">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputLogin" class="col-sm-3 col-form-label">Логин: </label>
+                    <div class="col-sm-9">
+                        <input type="text" class="w-100" id="inputLogin" name="login" value="">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputPassword" class="col-sm-3 col-form-label">Пароль: </label>
+                    <div class="col-sm-9">
+                        <input type="text" class="w-100" id="inputPassword" name="password" value="">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-sm-12 d-flex justify-content-end">
+                        <input class="btn btn-primary" type="submit" value="Добавить">
+                    </div>
+                </div>
+            </form>
+
+    </div>
+</main>
+<div th:replace="~{headers/index-template::footer}"></div>
+<div th:replace="~{headers/index-template::boostrap-bundle}"></div>
+</body>
+</html>

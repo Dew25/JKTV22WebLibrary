@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<div th:replace="headers/top::head"></div>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<div th:replace="headers/index-template::head"></div>
 <body>
-<div th:replace="headers/fragmentMenu"></div>
+<div th:replace="headers/index-template::menu"></div>
+<div th:replace="headers/index-template::info"></div>
 <main>
     <h1 class="w-100 text-center my-5">Список книг</h1>
     <div class="row d-flex justify-content-center ">
@@ -22,6 +23,7 @@
 
     </div>
 </main>
-<div th:replace="headers/footer"></div>
+<div th:replace="headers/index-template::footer"></div>
+<div th:replace="headers/index-template::boostrap-bundle"></div>
 </body>
 </html>

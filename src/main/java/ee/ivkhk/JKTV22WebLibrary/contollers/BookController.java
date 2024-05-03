@@ -46,10 +46,10 @@ public class BookController {
     }
 
     @GetMapping("/book")
-    public String book(Model model) {
+    public String addBookForm(Model model) {
         List<Author> listAuthors = (List<Author>) authorRepository.findAll();
         model.addAttribute("listAuthors", listAuthors);
-        return "addBook";
+        return "addBookForm";
     }
 
     @PostMapping("/book")
@@ -110,6 +110,7 @@ public class BookController {
 
     }
 
+
     @GetMapping("/img/{id}/{size}")
     @ResponseBody
     public byte[] insertCover(@PathVariable("id") Long id, @PathVariable("size") String size) throws RuntimeException {
@@ -152,5 +153,16 @@ public class BookController {
             return "redirect:/";
         }
         return "book";
+    }@GetMapping("/book/read/{id}")
+    public String readBook(@PathVariable("id") Long id, Model model) {
+        Optional<Book> item = bookRepository.findById(id);
+        if(item.isPresent()){
+
+            model.addAttribute("book",item.get());
+        }else{
+            model.addAttribute("info", "Не выбрана книга");
+            return "redirect:/";
+        }
+        return "redirect:/";
     }
 }

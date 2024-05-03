@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Book {
@@ -18,7 +19,12 @@ public class Book {
     private Integer quantity;
     private Integer count;
     @ManyToMany
-    private List<Author>  authors;
+    @JoinTable(
+            name = "book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private Set<Author> authors;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Cover cover;
 
@@ -30,7 +36,6 @@ public class Book {
         this.publishedYear = publishedYear;
         this.quantity = quantity;
         this.count = count;
-        this.authors = authors;
         this.cover = cover;
     }
 
@@ -106,11 +111,11 @@ public class Book {
         this.count = count;
     }
 
-    public List<Author> getAuthors() {
+    public Set<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<Author> authors) {
+    public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
 

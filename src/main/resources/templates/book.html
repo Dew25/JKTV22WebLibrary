@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:replace="headers/top::head"></div>
 <body>
-<div th:replace="headers/fragmentMenu"></div>
+<div th:replace="headers/menu"></div>
 <main>
 
     <div class="row d-flex justify-content-center ">
@@ -15,6 +15,7 @@
                         <span th:each="author : ${book.authors}"  th:text="${author.firstname + ' ' + author.lastname}"></span><br>
                         <span class="card-text" th:text="'Год издания: '+${book.publishedYear}"></span><br>
                         <a th:href="'read/'+${book.id}" class="btn btn-primary">Читать книгу</a>
+<!--                        <a th:href="/" class="btn btn-primary">Закрыть окно</a>-->
                     </div>
 
             </div>
