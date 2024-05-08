@@ -1,29 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
-<div th:replace="headers/index-template::head"></div>
+<div th:replace="index-template::head"></div>
 <body>
-<div th:replace="headers/index-template::menu"></div>
-<div th:replace="headers/index-template::info"></div>
+<div th:replace="index-template::menu"></div>
+<div th:replace="index-template::info"></div>
 <main>
-    <h1 class="w-100 text-center my-5">Список книг</h1>
-    <div class="row d-flex justify-content-center ">
-            <div class="card m-1 border border-2 border-primary p-2" style="width: 120px" th:each="book:${listBooks}" >
-                <a th:href="@{'/book/' + ${book.cover.id}}">
-                    <img th:src="@{'/img/' + ${book.cover.id}+'/min'}" alt="Обложка" />
-    <!--                <div class="card-body">-->
-    <!--                    <h5 class="card-title" th:utext="${book.title}"></h5>-->
-    <!--                    Авторы книги:<br>-->
-    <!--                    <span th:each="author : ${book.authors}"  th:text="${author.firstname + ' ' + author.lastname}"></span><br>-->
-    <!--                    <span class="card-text" th:each="author: ${book.authors}" th:text="${author.firstname +' '+ author.lastname}"></span>-->
-    <!--                    <span class="card-text" th:text="'Год издания: '+${book.publishedYear}"></span>-->
-    <!--                    <a th:href="'book/'+${book.id}" class="btn btn-primary">Посмотреть книгу</a>-->
-    <!--                </div>-->
-                </a>
-            </div>
+    <h1 class="w-100 text-center my-5">Добро пожаловать в нашу бибилотеку</h1>
+    <p class="w-100 text-center my-5">для просмотра книг вам необходимо зарегистрироваться или войти</p>
 
-    </div>
 </main>
-<div th:replace="headers/index-template::footer"></div>
-<div th:replace="headers/index-template::boostrap-bundle"></div>
+<div th:replace="index-template::footer"></div>
+<div th:replace="index-template::boostrap-bundle"></div>
 </body>
 </html>

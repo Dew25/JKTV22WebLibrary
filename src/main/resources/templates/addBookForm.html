@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<div th:replace="headers/top"></div>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<div th:replace="index-template::head"></div>
 <body>
-<div th:replace="headers/menu"></div>
+<div th:replace="index-template::menu"></div>
+<div th:replace="index-template::info"></div>
 <main>
     <h3 class="w-100 d-flex justify-content-center mt-5">Добавить книгу</h3>
     <div class="w-100 p-3 d-flex justify-content-center">
-        <form action="/book" method="POST" enctype="multipart/form-data" >
+        <form th:action="@{/book}" method="POST" enctype="multipart/form-data" >
             <div class="card border-0 m-2" style="width: 30rem;">
 
                 <div class="mb-3 row">
@@ -51,6 +52,7 @@
         </form>
     </div>
 </main>
-<div th:replace="headers/footer"></div>
+<div th:replace="index-template::footer"></div>
+<div th:replace="index-template::boostrap-bundle"></div>
 </body>
 </html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
-<div th:replace="~{headers/index-template :: head}"></div>
+<div th:replace="~{index-template :: head}"></div>
 <body>
-<div th:replace="~{headers/index-template::menu}"></div>
-<div th:replace="~{headers/index-template::info}"></div>
+<div th:replace="~{index-template::menu}"></div>
+<div th:replace="~{index-template::info}"></div>
 
 <main class="w-100 mx-auto">
     <h1 class="w-100 text-center my-5">Новый читатель</h1>
@@ -49,7 +49,7 @@
 
     </div>
 </main>
-<div th:replace="~{headers/index-template::footer}"></div>
-<div th:replace="~{headers/index-template::boostrap-bundle}"></div>
+<div th:replace="~{/index-template::footer}"></div>
+<div th:replace="~{index-template::boostrap-bundle}"></div>
 </body>
 </html>

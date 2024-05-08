@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.imgscalr.Scalr.OP_ANTIALIAS;
 import static org.imgscalr.Scalr.resize;
 
 @Controller
@@ -40,9 +39,13 @@ public class BookController {
 
     @GetMapping("/")
     public String home(Model model) {
+        return "/";
+    }
+    @GetMapping("/books")
+    public String books(Model model) {
         List<Book> listBooks = (List<Book>) bookRepository.findAll();
         model.addAttribute("listBooks", listBooks);
-        return "index";
+        return "books";
     }
 
     @GetMapping("/book")
@@ -106,7 +109,7 @@ public class BookController {
             System.out.println("Ошибка загрузки файла: " + e.getMessage());
         }
         model.addAttribute("info", "Книга добавлена");
-        return "redirect:/";
+        return "redirect:/books";
 
     }
 

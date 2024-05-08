@@ -33,7 +33,6 @@ public class AdminConfig {
                 reader.setFirstname("Juri");
                 reader.setLastname("Melnikov");
                 reader.setPhone("5654565456");
-                readerService.save(reader);
                 admin.setReader(reader);
                 myUserService.save(admin);
             }

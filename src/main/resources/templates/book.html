@@ -1,27 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<div th:replace="headers/top::head"></div>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<div th:replace="index-template::head"></div>
 <body>
-<div th:replace="headers/menu"></div>
+<div th:replace="index-template::menu"></div>
+<div th:replace="index-template::info"></div>
 <main>
-
     <div class="row d-flex justify-content-center ">
-            <div class="card m-1 border border-2 border-primary p-2" style="width: 400px" >
-
-                    <img th:src="@{'/img/' + ${book.cover.id + '/full'}}" alt="Обложка" />
-                    <div class="card-body">
-                        <h5 class="card-title" th:utext="${book.title}"></h5>
-                        Авторы книги:<br>
-                        <span th:each="author : ${book.authors}"  th:text="${author.firstname + ' ' + author.lastname}"></span><br>
-                        <span class="card-text" th:text="'Год издания: '+${book.publishedYear}"></span><br>
-                        <a th:href="'read/'+${book.id}" class="btn btn-primary">Читать книгу</a>
-<!--                        <a th:href="/" class="btn btn-primary">Закрыть окно</a>-->
-                    </div>
-
+        <div class="card m-1 border border-2 border-primary p-2" style="width: 400px" >
+            <img th:src="@{'/img/' + ${book.cover.id + '/full'}}" alt="Обложка" />
+            <div class="card-body">
+                <h5 class="card-title" th:utext="${book.title}"></h5>
+                Авторы книги:<br>
+                <span th:each="author : ${book.authors}"  th:text="${author.firstname + ' ' + author.lastname}"></span><br>
+                <span class="card-text" th:text="'Год издания: '+${book.publishedYear}"></span><br>
+                <a th:href="'read/'+${book.id}" class="btn btn-primary">Читать книгу</a>
+                <!--                        <a th:href="/" class="btn btn-primary">Закрыть окно</a>-->
             </div>
+        </div>
 
     </div>
 </main>
-<div th:replace="headers/footer"></div>
+<div th:replace="index-template::footer"></div>
+<div th:replace="index-template::boostrap-bundle"></div>
 </body>
 </html>
