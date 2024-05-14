@@ -8,7 +8,7 @@
     <h1 class="w-100 text-center my-5">Список книг</h1>
     <div class="row d-flex justify-content-center ">
             <div class="card m-1 border border-2 border-primary p-2" style="width: 120px" th:each="book:${listBooks}" >
-                <a th:href="@{'/book/' + ${book.cover.id}}">
+                <a th:href="@{'/book/book/' + ${book.cover.id}}">
                     <img th:src="@{'/img/' + ${book.cover.id}+'/min'}" alt="Обложка" />
     <!--                <div class="card-body">-->
     <!--                    <h5 class="card-title" th:utext="${book.title}"></h5>-->

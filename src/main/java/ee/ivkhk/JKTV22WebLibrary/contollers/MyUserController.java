@@ -22,7 +22,7 @@ public class MyUserController {
     @GetMapping("/registration")
     public String showRegistrationForm(Model model){
         model.addAttribute("info","Hello User JKTV22");
-        return "registration";
+        return "users/registration";
     }
 
     @PostMapping("/registration")
@@ -49,6 +49,7 @@ public class MyUserController {
     }
     @GetMapping("/login")
     public String loginForm(Model model){
-        return "login";
+
+        return "users/login";
     }
 }

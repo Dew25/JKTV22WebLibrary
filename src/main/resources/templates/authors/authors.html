@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<div th:replace="headers/top"></div>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<div th:replace="index-template::head"></div>
 <body>
-<div th:replace="headers/menu"></div>
-<main>
-    <h3 class="w-100 d-flex justify-content-center mt-5">Добавить автора</h3>
+<div th:replace="index-template::menu"></div>
+<div th:replace="index-template::info"></div>
+
+<h3 class="w-100 d-flex justify-content-center mt-5">Добавить автора</h3>
     <div class="w-100 p-3 d-flex justify-content-center">
-        <form action="/author" method="POST" >
+        <form action="/manager/author" method="POST" >
             <div class="card border-0 m-2" style="width: 30rem;">
                 <div class="mb-3 row">
                     <label for="inputFirstName" class="col-sm-3 col-form-label d-flex justify-content-end">Имя</label>
@@ -28,6 +29,7 @@
         </form>
     </div>
 </main>
-<div th:replace="headers/footer"></div>
+<div th:replace="index-template::footer"></div>
+<div th:replace="index-template::boostrap-bundle"></div>
 </body>
 </html>

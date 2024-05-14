@@ -13,7 +13,7 @@
                 Авторы книги:<br>
                 <span th:each="author : ${book.authors}"  th:text="${author.firstname + ' ' + author.lastname}"></span><br>
                 <span class="card-text" th:text="'Год издания: '+${book.publishedYear}"></span><br>
-                <a th:href="'read/'+${book.id}" class="btn btn-primary">Читать книгу</a>
+                <a th:href="'user/read/'+${book.id}" class="btn btn-primary">Читать книгу</a>
                 <!--                        <a th:href="/" class="btn btn-primary">Закрыть окно</a>-->
             </div>
         </div>

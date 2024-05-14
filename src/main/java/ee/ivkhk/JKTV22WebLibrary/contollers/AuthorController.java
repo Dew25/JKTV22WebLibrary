@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AuthorController {
     @Autowired
     AuthorRepository authorRepository;
-    @GetMapping("/author")
+    @GetMapping("/manager/author")
     public String addAuthorForm(Model model){
         return "authors/authors";
     }
-    @PostMapping("/author")
+    @PostMapping("/manager/author")
     public String addAuthorForm(
             @RequestParam String firstname,
             @RequestParam String lastname,
@@ -30,5 +30,8 @@ public class AuthorController {
         model.addAttribute("info","Автор создан");
         return "redirect:/authors/authors";
     }
-
+    @GetMapping("/manager/author/all")
+    public String getAllAuthors(Model model){
+        return "redirect:/";
+    }
 }

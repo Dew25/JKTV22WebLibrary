@@ -1,6 +1,8 @@
 package ee.ivkhk.JKTV22WebLibrary.configure;
 
 
+import ee.ivkhk.JKTV22WebLibrary.contollers.AdminController;
+import ee.ivkhk.JKTV22WebLibrary.entity.MyUser;
 import ee.ivkhk.JKTV22WebLibrary.service.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,8 +33,9 @@ public class SecurityConfig {
                                 ,"/login"
                                 ,"/registration"
                         ).permitAll()
-                        .requestMatchers("/user").hasAnyAuthority("USER")
-                        .requestMatchers("/admin").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/user/**","/img/**").hasAnyAuthority(AdminController.Roles.USER.toString())
+                        .requestMatchers("/manager/**").hasAnyAuthority(AdminController.Roles.MANAGER.toString())
+                        .requestMatchers("/admin/**").hasAnyAuthority(AdminController.Roles.ADMIN.toString())
                         .anyRequest().authenticated()
                 )
                 .formLogin(login->login
@@ -40,6 +43,7 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/",true)
                         .permitAll())
                 .logout(logout->logout
+                        .permitAll()
                         .logoutSuccessUrl("/"));
         return http.build();
     }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<div th:replace="index-template::head"></div>
+<body>
+<div th:replace="index-template::menu"></div>
+<div th:replace="index-template::info"></div>
+<main>
+    <h1 class="w-100 text-center my-5">Редактирование ролей пользователя</h1>
+    <div class="row d-flex justify-content-center">
+        <div class="card m-2 border-0" style="width: 45rem;">
+            <form th:action="@{/admin/addOrRemoveRole}" method="POST">
+                <div class="mb-3 row">
+                    <label for="userSelect" class="col-sm-4 col-form-label text-end">Список пользователей</label>
+                    <div class="col-sm-8">
+                        <select class="form-select" name="userId" id="userSelect">
+                            <option value="#" selected disabled>Выберите пользователя</option>
+                            <option th:each="user : ${listUsers}" th:value="${user.id}">
+                                <span th:text="${user.reader.firstname + ' ' + user.reader.lastname + '. ' + user.username}"></span>
+                                [<span th:each="role : ${user.roles}" th:text="${role+' '}"></span>]
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="roleSelect" class="col-sm-4 col-form-label text-end">Список ролей</label>
+                    <div class="col-sm-4">
+                        <select class="form-select" name="roleName" id="roleSelect">
+                            <option value="#" selected disabled>Выберите роль</option>
+                            <option th:each="role : ${roles}" th:value="${role.toString()}" th:text="${role.toString()}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-sm-12 d-flex justify-content-end">
+                        <button class="btn btn-primary mx-2" type="submit" name="btnChange" value="delete">Удалить роль</button>
+                        <button class="btn btn-primary" type="submit"  name="btnChange" value="add">Добавить роль</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</main>
+<div th:replace="index-template::footer"></div>
+<div th:replace="index-template::boostrap-bundle"></div>
+</body>
+</html>

@@ -39,23 +39,23 @@ public class BookController {
 
     @GetMapping("/")
     public String home(Model model) {
-        return "/";
+        return "index";
     }
-    @GetMapping("/books")
+    @GetMapping("/user/books")
     public String books(Model model) {
         List<Book> listBooks = (List<Book>) bookRepository.findAll();
         model.addAttribute("listBooks", listBooks);
-        return "books";
+        return "books/books";
     }
 
-    @GetMapping("/book")
+    @GetMapping("/user/book")
     public String addBookForm(Model model) {
         List<Author> listAuthors = (List<Author>) authorRepository.findAll();
         model.addAttribute("listAuthors", listAuthors);
-        return "addBookForm";
+        return "books/addBookForm";
     }
 
-    @PostMapping("/book")
+    @PostMapping("/user/book")
     public String addBook(
             @RequestParam String bookName,
             @RequestParam String[] bookAuthors,
@@ -109,7 +109,7 @@ public class BookController {
             System.out.println("Ошибка загрузки файла: " + e.getMessage());
         }
         model.addAttribute("info", "Книга добавлена");
-        return "redirect:/books";
+        return "redirect:/user/books";
 
     }
 
@@ -146,7 +146,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/book/{id}")
+    @GetMapping("/user/book/{id}")
     public String showBook(@PathVariable("id") Long id, Model model) {
         Optional<Book> item = bookRepository.findById(id);
         if(item.isPresent()){
@@ -155,8 +155,8 @@ public class BookController {
             model.addAttribute("info", "Не выбрана книга");
             return "redirect:/";
         }
-        return "book";
-    }@GetMapping("/book/read/{id}")
+        return "books/book";
+    }@GetMapping("/user/book/read/{id}")
     public String readBook(@PathVariable("id") Long id, Model model) {
         Optional<Book> item = bookRepository.findById(id);
         if(item.isPresent()){

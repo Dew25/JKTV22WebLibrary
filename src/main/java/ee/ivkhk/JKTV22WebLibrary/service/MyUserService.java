@@ -5,6 +5,7 @@ import ee.ivkhk.JKTV22WebLibrary.entity.MyUser;
 import ee.ivkhk.JKTV22WebLibrary.repository.MyUserRepository;
 import ee.ivkhk.JKTV22WebLibrary.repository.ReaderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +32,8 @@ public class MyUserService {
     public void save(MyUser myUser){
         readerRepository.save(myUser.getReader());
         myUserRepository.save(myUser);
+    }
+    public MyUser findById(Long id){
+        return myUserRepository.findById(id).orElseThrow(()->new UsernameNotFoundException("user not found"));
     }
 }
