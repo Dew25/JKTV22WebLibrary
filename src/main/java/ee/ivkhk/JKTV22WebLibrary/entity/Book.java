@@ -18,13 +18,13 @@ public class Book {
     private Integer publishedYear;
     private Integer quantity;
     private Integer count;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "book_author",
+            name = "book_authors",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
-    private Set<Author> authors;
+    private List<Author> authors;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Cover cover;
 
@@ -37,32 +37,8 @@ public class Book {
         this.quantity = quantity;
         this.count = count;
         this.cover = cover;
+        this.authors=authors;
     }
-
-//    public byte[] getCover() {
-//        // Создаем объект File для файла изображения
-//        File file = new File(cover.getPathToCover());
-//        // Проверяем, существует ли файл
-//        if (!file.exists()) {
-//            try {
-//                throw new IOException("Файл не найден: " + cover.getFileName());
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//        // Читаем содержимое файла в массив байт
-//        try (FileInputStream fis = new FileInputStream(file);
-//             ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-//            byte[] buffer = new byte[1024];
-//            int bytesRead;
-//            while ((bytesRead = fis.read(buffer)) != -1) {
-//                bos.write(buffer, 0, bytesRead);
-//            }
-//            return bos.toByteArray();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 
     public Cover getCover() {
         return cover;
@@ -111,11 +87,11 @@ public class Book {
         this.count = count;
     }
 
-    public Set<Author> getAuthors() {
+    public List<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(Set<Author> authors) {
+    public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
 

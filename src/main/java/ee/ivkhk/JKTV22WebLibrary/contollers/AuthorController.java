@@ -28,7 +28,7 @@ public class AuthorController {
         author.setLastname(lastname);
         authorRepository.save(author);
         model.addAttribute("info","Автор создан");
-        return "redirect:/authors/authors";
+        return "redirect:/user/book";
     }
     @GetMapping("/manager/author/all")
     public String getAllAuthors(Model model){

@@ -16,6 +16,7 @@ public class MyUser {
     private String username;
     private String password;
     @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name = "user_roles")
     private Set<String> roles = new HashSet<>();
     @OneToOne
     private Reader reader;

@@ -1,14 +1,17 @@
 package ee.ivkhk.JKTV22WebLibrary.contollers;
 
-import ee.ivkhk.JKTV22WebLibrary.entity.Author;
-import ee.ivkhk.JKTV22WebLibrary.entity.Book;
-import ee.ivkhk.JKTV22WebLibrary.entity.Cover;
+import ee.ivkhk.JKTV22WebLibrary.entity.*;
 import ee.ivkhk.JKTV22WebLibrary.repository.AuthorRepository;
 import ee.ivkhk.JKTV22WebLibrary.repository.BookRepository;
 import ee.ivkhk.JKTV22WebLibrary.repository.CoverRepository;
+import ee.ivkhk.JKTV22WebLibrary.repository.HistoryRepository;
+import ee.ivkhk.JKTV22WebLibrary.security.MyUserDetails;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,15 +20,15 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.*;
 
 import static org.imgscalr.Scalr.resize;
 
 @Controller
 public class BookController {
+    @Autowired
+    private HistoryRepository historyRepository;
     @Autowired
     private BookRepository bookRepository;
     @Autowired
@@ -48,14 +51,14 @@ public class BookController {
         return "books/books";
     }
 
-    @GetMapping("/user/book")
+    @GetMapping("/manager/book")
     public String addBookForm(Model model) {
         List<Author> listAuthors = (List<Author>) authorRepository.findAll();
         model.addAttribute("listAuthors", listAuthors);
         return "books/addBookForm";
     }
 
-    @PostMapping("/user/book")
+    @PostMapping("/manager/book")
     public String addBook(
             @RequestParam String bookName,
             @RequestParam String[] bookAuthors,
@@ -71,7 +74,7 @@ public class BookController {
         try {
             if (file == null) {
                 model.addAttribute("info", "Книга не добавлена. Выберите файл обложки");
-                return "redirect:/book";
+                return "redirect:/manager/book";
             }
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
@@ -109,7 +112,7 @@ public class BookController {
             System.out.println("Ошибка загрузки файла: " + e.getMessage());
         }
         model.addAttribute("info", "Книга добавлена");
-        return "redirect:/user/books";
+        return books(model);
 
     }
 
@@ -147,25 +150,38 @@ public class BookController {
     }
 
     @GetMapping("/user/book/{id}")
-    public String showBook(@PathVariable("id") Long id, Model model) {
+    public String showBook(@PathVariable("id") Long id, Model model,@AuthenticationPrincipal MyUserDetails myUserDetais) {
         Optional<Book> item = bookRepository.findById(id);
         if(item.isPresent()){
             model.addAttribute("book",item.get());
+            List<History> readedBookHistories = historyRepository.fingHisoryByBook(item.get(),myUserDetais.getMyUser());
+            if(readedBookHistories.size() > 0){
+                model.addAttribute("reading",false);
+            }else{
+                model.addAttribute("reading",true);
+            }
         }else{
             model.addAttribute("info", "Не выбрана книга");
             return "redirect:/";
         }
         return "books/book";
-    }@GetMapping("/user/book/read/{id}")
-    public String readBook(@PathVariable("id") Long id, Model model) {
+    }
+    @GetMapping("/user/book/read/{id}")
+    public String readBook(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal MyUserDetails userDetais) {
         Optional<Book> item = bookRepository.findById(id);
         if(item.isPresent()){
-
+            History history = new History();
+            Book book = item.get();
+            history.setBook(book);
+            MyUser myUser = userDetais.getMyUser();
+            history.setMyUser(myUser);
+            history.setTakeOnDate(LocalDate.now());
+            historyRepository.save(history);
             model.addAttribute("book",item.get());
         }else{
             model.addAttribute("info", "Не выбрана книга");
             return "redirect:/";
         }
-        return "redirect:/";
+        return "redirect:/user/books";
     }
 }

@@ -46,7 +46,7 @@ public class AdminController {
             model.addAttribute("info","Изменения нет");
         }
         myUserService.save(myUser);
-        showAdminPanelForm(model);
+        //showAdminPanelForm(model);
         return  showAdminPanelForm(model);
     }
 }

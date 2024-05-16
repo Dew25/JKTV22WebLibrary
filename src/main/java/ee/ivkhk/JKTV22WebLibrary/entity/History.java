@@ -1,10 +1,9 @@
 package ee.ivkhk.JKTV22WebLibrary.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.time.LocalDate;
 
 
 @Entity
@@ -13,5 +12,12 @@ public class History {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-   // private Book book;
+    @OneToOne
+    private Book book;
+    @OneToOne
+    private MyUser myUser;
+    @Temporal(TemporalType.DATE)
+    private LocalDate takeOnDate;
+    @Temporal(TemporalType.DATE)
+    private LocalDate returnDate;
 }
