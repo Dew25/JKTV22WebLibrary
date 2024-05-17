@@ -1,17 +1,16 @@
 package ee.ivkhk.JKTV22WebLibrary.contollers;
 
 import ee.ivkhk.JKTV22WebLibrary.entity.*;
-import ee.ivkhk.JKTV22WebLibrary.repository.AuthorRepository;
-import ee.ivkhk.JKTV22WebLibrary.repository.BookRepository;
-import ee.ivkhk.JKTV22WebLibrary.repository.CoverRepository;
-import ee.ivkhk.JKTV22WebLibrary.repository.HistoryRepository;
+import ee.ivkhk.JKTV22WebLibrary.repository.*;
 import ee.ivkhk.JKTV22WebLibrary.security.MyUserDetails;
+import ee.ivkhk.JKTV22WebLibrary.service.MyUserService;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +28,8 @@ import static org.imgscalr.Scalr.resize;
 public class BookController {
     @Autowired
     private HistoryRepository historyRepository;
+    @Autowired
+    private MyUserService myUserService;
     @Autowired
     private BookRepository bookRepository;
     @Autowired
@@ -154,7 +155,7 @@ public class BookController {
         Optional<Book> item = bookRepository.findById(id);
         if(item.isPresent()){
             model.addAttribute("book",item.get());
-            List<History> readedBookHistories = historyRepository.fingHisoryByBook(item.get(),myUserDetais.getMyUser());
+            List<History> readedBookHistories = historyRepository.fingHistoryByBook(item.get(),myUserDetais.getMyUser());
             if(readedBookHistories.size() > 0){
                 model.addAttribute("reading",false);
             }else{
@@ -167,21 +168,36 @@ public class BookController {
         return "books/book";
     }
     @GetMapping("/user/book/read/{id}")
-    public String readBook(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal MyUserDetails userDetais) {
-        Optional<Book> item = bookRepository.findById(id);
-        if(item.isPresent()){
+    public String readBook(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+        Optional<Book> itemBook = bookRepository.findById(id);
+        if(itemBook.isPresent()){
             History history = new History();
-            Book book = item.get();
+            Book book = itemBook.get();
             history.setBook(book);
-            MyUser myUser = userDetais.getMyUser();
+            MyUser myUser = myUserService.findById(myUserDetails.getMyUser().getId());
             history.setMyUser(myUser);
             history.setTakeOnDate(LocalDate.now());
             historyRepository.save(history);
-            model.addAttribute("book",item.get());
+            model.addAttribute("book",itemBook.get());
         }else{
             model.addAttribute("info", "Не выбрана книга");
             return "redirect:/";
         }
         return "redirect:/user/books";
+    }
+    @GetMapping("/user/book/return/{id}")
+    public String returnBook(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+        Optional<Book> itemBook = bookRepository.findById(id);
+        if(itemBook.isPresent()){
+            MyUser myUser = myUserService.findById(myUserDetails.getMyUser().getId());
+            Optional itemHistory = historyRepository.findHistoryByBookAndMyUserAndReturnDateIsNull(itemBook.get(),myUser);
+            History history = historyRepository.findHistoryByBookAndMyUserAndReturnDateIsNull(itemBook.get(),myUser).orElseThrow(()->new UsernameNotFoundException("history not found"));;
+            history.setReturnDate(LocalDate.now());
+            historyRepository.save(history);
+            model.addAttribute("info", "Книга возвращена");
+        }else{
+            model.addAttribute("info", "Возвратить книгу не удалось");
+        }
+        return books(model);
     }
 }

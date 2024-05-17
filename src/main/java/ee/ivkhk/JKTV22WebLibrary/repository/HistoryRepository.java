@@ -10,8 +10,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface HistoryRepository extends JpaRepository<History,Long> {
     @Query("SELECT h FROM History h WHERE h.book = :book AND h.returnDate is null AND h.myUser = :myUser")
-    List<History> fingHisoryByBook(Book book, MyUser myUser);
+    public List<History> fingHistoryByBook(Book book, MyUser myUser);
+
+    Optional<History> findHistoryByBookAndMyUserAndReturnDateIsNull(Book book, MyUser myUser);
 }

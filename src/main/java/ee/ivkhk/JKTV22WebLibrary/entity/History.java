@@ -12,9 +12,11 @@ public class History {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "book_id",unique = false)
     private Book book;
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "my_user_id",unique = false)
     private MyUser myUser;
     @Temporal(TemporalType.DATE)
     private LocalDate takeOnDate;

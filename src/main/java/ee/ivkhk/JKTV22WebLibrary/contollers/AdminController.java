@@ -36,6 +36,10 @@ public class AdminController {
             return  showAdminPanelForm(model);
         }
         MyUser myUser = myUserService.findById(Long.parseLong(userId));
+        if(myUser.getUsername().equals("admin")){
+            model.addAttribute("info","Пользователю "+myUser.getUsername()+" изменение статуса невозможно");
+            return showAdminPanelForm(model);
+        }
         if(!myUser.getRoles().contains(roleName) && btnChange.equals("add")){
             myUser.getRoles().add(roleName);
             model.addAttribute("info","Пользователю "+myUser.getUsername()+" добавлена роль "+roleName);
